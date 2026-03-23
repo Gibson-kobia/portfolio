@@ -55,7 +55,7 @@ export default function Hero() {
           variants={itemVariants}
           className="text-5xl md:text-8xl font-black mb-6"
         >
-          SOLO <span className="neon-text">BUILDER</span>
+          GIBSON <span className="neon-text">KOBIA</span>
         </motion.h1>
         
         <motion.div

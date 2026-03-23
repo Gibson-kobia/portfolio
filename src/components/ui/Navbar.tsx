@@ -44,7 +44,7 @@ export default function Navbar() {
           animate={{ opacity: 1, x: 0 }}
           className="text-2xl font-black uppercase tracking-tighter"
         >
-          SOLO<span className="text-accent">BUILDER</span>
+          GIBSON<span className="text-accent">KOBIA</span>
         </motion.div>
 
         {/* Desktop Menu */}

@@ -20,7 +20,7 @@ export default function Home() {
       
       <footer className="py-12 border-t border-white/5 text-center">
         <p className="text-muted-foreground text-sm uppercase tracking-widest">
-          &copy; {new Date().getFullYear()} SOLO BUILDER. ALL RIGHTS RESERVED.
+          &copy; {new Date().getFullYear()} GIBSON KOBIA. ALL RIGHTS RESERVED.
         </p>
       </footer>
     </main>
