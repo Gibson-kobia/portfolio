@@ -1,20 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050505;
-  --foreground: #f0f0f0;
-  --accent: #00f3ff; /* Neon Cyan */
-  --accent-foreground: #050505;
-  --muted: #1a1a1a;
-  --muted-foreground: #a0a0a0;
-  --card: #0a0a0a;
-  --border: #222;
+  --background: #0a0a0a; /* Matte Black */
+  --foreground: #fcfcfc;
+  --accent: #00f3ff; /* Cyan */
+  --accent-muted: #00d1ff; /* Teal */
+  --accent-foreground: #0a0a0a;
+  --muted: #161616;
+  --muted-foreground: #7d7d7d;
+  --card: #111111;
+  --border: #1a1a1a;
+  --selection-bg: #00f3ff;
+  --selection-text: #0a0a0a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
+  --color-accent-muted: var(--accent-muted);
   --color-accent-foreground: var(--accent-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -22,11 +26,21 @@
   --color-border: var(--border);
 }
 
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  cursor: none !important; /* Hide default cursor */
+}
+
+@media (min-width: 769px) {
+  * {
+    cursor: none !important; /* Hide default cursor only on desktop */
+  }
 }
 
 html,

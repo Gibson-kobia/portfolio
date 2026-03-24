@@ -1,72 +1,93 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+import { Award, Zap, Target, Users } from 'lucide-react';
 
 export default function About() {
-  const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
 
   const stats = [
-    { label: 'Years Experience', value: '5+' },
-    { label: 'Projects Completed', value: '40+' },
-    { label: 'Happy Clients', value: '30+' },
-    { label: 'Cups of Coffee', value: '∞' },
+    { label: 'Years Depth', value: '08', icon: <Award size={20} /> },
+    { label: 'Products Launched', value: '24', icon: <Zap size={20} /> },
+    { label: 'System Uptime', value: '99.9', icon: <Target size={20} /> },
+    { label: 'Global Users', value: '2M+', icon: <Users size={20} /> },
   ];
 
   return (
-    <section id="about" className="max-w-7xl mx-auto py-24 px-6 md:px-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-          variants={fadeIn}
-        >
-          <h2 className="text-4xl md:text-6xl font-black mb-8">
-            ABOUT <span className="neon-text">ME</span>
-          </h2>
-          <div className="space-y-6 text-lg md:text-xl text-muted-foreground leading-relaxed">
-            <p>
-              I am a passionate Full-Stack Developer with a focus on creating immersive and high-performance digital experiences. 
-              My journey in tech is driven by a desire to bridge the gap between complex engineering and elegant design.
-            </p>
-            <p>
-              With over 5 years of experience, I&apos;ve worked on a wide range of projects, from scalable SaaS platforms to 
-              interactive marketing sites. I thrive on challenges and am constantly exploring new technologies to push 
-              the boundaries of what&apos;s possible on the web.
-            </p>
-            <p>
-              When I&apos;m not coding, you can find me exploring the latest UI trends, experimenting with 3D web animations, 
-              or contributing to open-source projects.
-            </p>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-          }}
-          className="grid grid-cols-2 gap-6"
-        >
-          {stats.map((stat, index) => (
+    <section ref={containerRef} id="about" className="relative py-32 px-6 md:px-12 overflow-hidden bg-background">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          
+          {/* Text Content */}
+          <div className="lg:col-span-7">
             <motion.div
-              key={index}
-              variants={fadeIn}
-              className="glass-card p-8 flex flex-col items-center justify-center text-center border-accent/20 hover:border-accent/50 transition-colors"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="text-4xl md:text-5xl font-black text-accent mb-2">{stat.value}</span>
-              <span className="text-sm md:text-base text-muted-foreground uppercase tracking-wider">
-                {stat.label}
+              <span className="text-accent font-mono text-xs uppercase tracking-[0.4em] mb-6 block">
+                The Philosophy
               </span>
+              <h2 className="text-4xl md:text-7xl font-black mb-12 uppercase tracking-tighter leading-none">
+                Bridging the gap between <span className="text-transparent border-text stroke-white/20">Aesthetics</span> and <span className="text-accent">Architecture</span>.
+              </h2>
+              
+              <div className="space-y-8 text-lg md:text-xl text-muted-foreground leading-relaxed font-medium">
+                <p>
+                  I don&apos;t just build websites; I engineer digital products that demand attention. 
+                  My approach combines the precision of high-performance backend systems 
+                  with the cinematic elegance of modern frontend motion design.
+                </p>
+                <p>
+                  Every pixel is intentional, every interaction is weighted, and every line of code 
+                  is optimized for scale. I specialize in turning complex technical requirements 
+                  into seamless, high-impact user experiences.
+                </p>
+              </div>
             </motion.div>
-          ))}
-        </motion.div>
+          </div>
+
+          {/* Stats Grid */}
+          <div className="lg:col-span-5 relative">
+            <motion.div style={{ y }} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.8 }}
+                  className="glass-card p-10 flex flex-col items-start gap-6 border-white/5 hover:border-accent/30 transition-colors group"
+                >
+                  <div className="p-4 bg-white/5 rounded-2xl group-hover:bg-accent/10 group-hover:text-accent transition-all">
+                    {stat.icon}
+                  </div>
+                  <div>
+                    <div className="text-4xl md:text-5xl font-black mb-1 flex items-baseline gap-1">
+                      {stat.value}
+                      <span className="text-accent text-sm font-bold uppercase tracking-tighter">Metric</span>
+                    </div>
+                    <span className="text-[10px] text-muted-foreground uppercase tracking-[0.3em] font-bold">
+                      {stat.label}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+            
+            {/* Background Accent */}
+            <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/10 blur-[120px] rounded-full" />
+          </div>
+
+        </div>
       </div>
     </section>
   );

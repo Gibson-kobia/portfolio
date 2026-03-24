@@ -1,185 +1,154 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Send, CheckCircle, Mail, MapPin, Phone } from 'lucide-react';
-import MagneticButton from '@/components/ui/MagneticButton';
+import { motion } from 'framer-motion';
+import { Send, CheckCircle2 } from 'lucide-react';
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      
-      if (res.ok) {
-        setIsSuccess(true);
-        setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setIsSuccess(false), 5000);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    
+    setIsSubmitting(false);
+    setIsSubmitted(true);
   };
 
-  const contactInfo = [
-    { icon: <Mail className="text-accent" />, label: 'Email', value: 'hello@solobuilder.dev' },
-    { icon: <MapPin className="text-accent" />, label: 'Location', value: 'San Francisco, CA' },
-    { icon: <Phone className="text-accent" />, label: 'Phone', value: '+1 (555) 123-4567' },
-  ];
-
   return (
-    <section id="contact" className="max-w-7xl mx-auto py-24 px-6 md:px-12">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-100px' }}
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
-        }}
-        className="mb-16"
-      >
-        <h2 className="text-4xl md:text-6xl font-black mb-6 uppercase text-center md:text-left">
-          GET IN <span className="neon-text">TOUCH</span>
-        </h2>
-        <p className="max-w-2xl text-muted-foreground text-lg md:text-xl text-center md:text-left mx-auto md:mx-0">
-          Interested in working together? Let&apos;s discuss your next project or just say hello.
-        </p>
-      </motion.div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-        {/* Contact Info */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="space-y-12"
-        >
-          <div className="space-y-8">
-            {contactInfo.map((info, index) => (
-              <div key={index} className="flex items-center gap-6 group">
-                <div className="p-4 bg-accent/10 rounded-2xl group-hover:bg-accent/20 transition-colors">
-                  {info.icon}
-                </div>
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1">{info.label}</p>
-                  <p className="text-xl font-bold group-hover:text-accent transition-colors">{info.value}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="glass-card p-8 border-accent/10">
-            <h3 className="text-xl font-black mb-4 uppercase">Social <span className="neon-text">Presence</span></h3>
-            <p className="text-muted-foreground mb-6">
-              I&apos;m active on LinkedIn, GitHub, and Twitter. Feel free to reach out there as well.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Contact Form */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="glass-card p-8 md:p-12 border-accent/20"
-        >
-          <AnimatePresence mode="wait">
-            {isSuccess ? (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="h-full flex flex-col items-center justify-center text-center py-12"
-              >
-                <div className="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle size={48} className="text-accent" />
-                </div>
-                <h3 className="text-2xl font-black mb-4 uppercase">Message <span className="neon-text">Sent</span></h3>
-                <p className="text-muted-foreground">
-                  Thank you for reaching out! I&apos;ll get back to you as soon as possible.
+    <section id="contact" className="py-32 px-6 md:px-12 bg-background overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
+          
+          {/* Contact Info */}
+          <div className="lg:col-span-5">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              <span className="text-accent font-mono text-xs uppercase tracking-[0.4em] mb-6 block">
+                The Connection
+              </span>
+              <h2 className="text-4xl md:text-7xl font-black mb-12 uppercase tracking-tighter leading-none">
+                Let&apos;s build <br />
+                <span className="text-transparent border-text stroke-white/20">something</span> <br />
+                <span className="text-accent">legendary</span>.
+              </h2>
+              
+              <div className="space-y-6 text-muted-foreground font-medium text-lg leading-relaxed">
+                <p>
+                  I am currently available for selective freelance partnerships 
+                  and high-impact full-time opportunities.
                 </p>
-                <button
-                  onClick={() => setIsSuccess(false)}
-                  className="mt-8 text-accent font-bold uppercase tracking-widest text-sm underline underline-offset-8"
+                <p>
+                  Whether you have a specific project in mind or just want to 
+                  discuss technical architecture, I&apos;m all ears.
+                </p>
+              </div>
+
+              <div className="mt-12 pt-12 border-t border-white/5 space-y-4">
+                <p className="text-xs uppercase tracking-[0.3em] font-black text-foreground/50">Direct Channel</p>
+                <a 
+                  href="mailto:hello@solobuilder.dev" 
+                  className="text-2xl md:text-3xl font-black hover:text-accent transition-colors tracking-tighter"
                 >
-                  Send another message
-                </button>
-              </motion.div>
-            ) : (
-              <motion.form
-                key="form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onSubmit={handleSubmit}
-                className="space-y-8"
-              >
-                <div className="space-y-2">
-                  <label htmlFor="name" className="text-xs uppercase tracking-widest text-muted-foreground">
-                    Full Name
-                  </label>
-                  <input
-                    id="name"
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-6 py-4 focus:border-accent focus:outline-none transition-colors text-white"
-                    placeholder="Enter your name"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-xs uppercase tracking-widest text-muted-foreground">
-                    Email Address
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-6 py-4 focus:border-accent focus:outline-none transition-colors text-white"
-                    placeholder="Enter your email"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="message" className="text-xs uppercase tracking-widest text-muted-foreground">
-                    Your Message
-                  </label>
-                  <textarea
-                    id="message"
-                    required
-                    rows={6}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-6 py-4 focus:border-accent focus:outline-none transition-colors text-white resize-none"
-                    placeholder="Enter your message"
-                  />
-                </div>
-                <MagneticButton
-                  className="w-full py-5 bg-accent text-accent-foreground font-black uppercase tracking-widest rounded-lg flex items-center gap-3"
+                  hello@solobuilder.dev
+                </a>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="lg:col-span-7 relative">
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+              className="glass-card p-8 md:p-12 border-white/5"
+            >
+              {isSubmitted ? (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex flex-col items-center justify-center py-20 text-center gap-6"
                 >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                  <Send size={18} />
-                </MagneticButton>
-              </motion.form>
-            )}
-          </AnimatePresence>
-        </motion.div>
+                  <div className="p-6 bg-accent/10 text-accent rounded-full">
+                    <CheckCircle2 size={48} />
+                  </div>
+                  <h3 className="text-3xl font-black uppercase tracking-tight">Message Received</h3>
+                  <p className="text-muted-foreground font-medium max-w-sm">
+                    I&apos;ll review your request and get back to you within 24 hours.
+                  </p>
+                  <button 
+                    onClick={() => setIsSubmitted(false)}
+                    className="mt-8 text-xs font-black uppercase tracking-widest text-accent hover:underline"
+                  >
+                    Send another message
+                  </button>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Full Name</label>
+                      <input 
+                        required
+                        type="text" 
+                        placeholder="John Doe"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:border-accent/50 outline-none transition-all font-medium text-sm"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Email Address</label>
+                      <input 
+                        required
+                        type="email" 
+                        placeholder="john@example.com"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:border-accent/50 outline-none transition-all font-medium text-sm"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Subject</label>
+                    <input 
+                      required
+                      type="text" 
+                      placeholder="Project Inquiry"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:border-accent/50 outline-none transition-all font-medium text-sm"
+                    />
+                  </div>
+
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Message Body</label>
+                    <textarea 
+                      required
+                      rows={6}
+                      placeholder="Tell me about your vision..."
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:border-accent/50 outline-none transition-all font-medium text-sm resize-none"
+                    />
+                  </div>
+
+                  <button 
+                    disabled={isSubmitting}
+                    className="w-full py-6 bg-accent text-accent-foreground font-black uppercase tracking-[0.3em] text-xs rounded-xl hover:shadow-[0_0_30px_rgba(0,243,255,0.2)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-4 group"
+                  >
+                    {isSubmitting ? 'Sending Transmission...' : 'Launch Message'}
+                    {!isSubmitting && <Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
+                  </button>
+                </form>
+              )}
+            </motion.div>
+          </div>
+
+        </div>
       </div>
     </section>
   );

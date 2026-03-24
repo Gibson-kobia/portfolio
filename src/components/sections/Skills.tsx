@@ -1,102 +1,82 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { 
-  Code2, 
-  Database, 
-  Framer, 
-  Layout, 
-  Layers, 
-  Server, 
-  Smartphone, 
-  Terminal, 
-  Wind, 
-  Zap,
-  Globe,
-  Cpu
-} from 'lucide-react';
+import { skillCategories } from '@/data/skills';
+import { Terminal, Cpu, Layout, Layers, Globe, Server } from 'lucide-react';
 
-const skills = [
-  { name: 'React / Next.js', icon: <Code2 className="text-accent" />, level: 'Expert' },
-  { name: 'TypeScript', icon: <Terminal className="text-accent" />, level: 'Advanced' },
-  { name: 'Tailwind CSS', icon: <Wind className="text-accent" />, level: 'Expert' },
-  { name: 'Framer Motion', icon: <Framer className="text-accent" />, level: 'Advanced' },
-  { name: 'Node.js / Express', icon: <Server className="text-accent" />, level: 'Advanced' },
-  { name: 'PostgreSQL / MongoDB', icon: <Database className="text-accent" />, level: 'Intermediate' },
-  { name: 'Three.js / WebGL', icon: <Zap className="text-accent" />, level: 'Intermediate' },
-  { name: 'Redux / Zustand', icon: <Layers className="text-accent" />, level: 'Advanced' },
-  { name: 'Responsive Design', icon: <Smartphone className="text-accent" />, level: 'Expert' },
-  { name: 'UI/UX Design', icon: <Layout className="text-accent" />, level: 'Advanced' },
-  { name: 'API Design', icon: <Globe className="text-accent" />, level: 'Advanced' },
-  { name: 'Performance Optimization', icon: <Cpu className="text-accent" />, level: 'Expert' },
-];
+const iconMap: { [key: string]: any } = {
+  'Frontend Engineering': <Layout size={24} />,
+  'Backend & Infrastructure': <Server size={24} />,
+  'Experience Design': <Globe size={24} />,
+};
 
 export default function Skills() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
-    },
-  };
-
   return (
-    <section id="skills" className="max-w-7xl mx-auto py-24 px-6 md:px-12 bg-muted/5">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-100px' }}
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
-        }}
-        className="mb-16 text-center"
-      >
-        <h2 className="text-4xl md:text-6xl font-black mb-6 uppercase">
-          MY <span className="neon-text">SKILLS</span>
-        </h2>
-        <p className="max-w-2xl mx-auto text-muted-foreground text-lg md:text-xl">
-          I&apos;ve mastered a diverse set of technologies to build modern, high-performance web applications.
-        </p>
-      </motion.div>
+    <section id="skills" className="py-32 px-6 md:px-12 bg-black/50">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-20 text-center"
+        >
+          <span className="text-accent font-mono text-xs uppercase tracking-[0.4em] mb-4 block">
+            The Arsenal
+          </span>
+          <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter">
+            Core <span className="text-transparent border-text stroke-white/20">Capabilities</span>
+          </h2>
+        </motion.div>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-50px' }}
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-      >
-        {skills.map((skill, index) => (
-          <motion.div
-            key={index}
-            variants={itemVariants}
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="glass-card p-6 flex flex-col items-center justify-center text-center gap-4 group cursor-default"
-          >
-            <div className="p-4 bg-accent/10 rounded-2xl group-hover:bg-accent/20 transition-colors">
-              {skill.icon}
-            </div>
-            <h3 className="text-lg font-bold group-hover:text-accent transition-colors">
-              {skill.name}
-            </h3>
-            <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-              {skill.level}
-            </span>
-          </motion.div>
-        ))}
-      </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {skillCategories.map((category, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1, duration: 1 }}
+              className="glass-card p-12 border-white/5 flex flex-col group hover:border-accent/30 transition-all duration-500"
+            >
+              <div className="p-5 bg-white/5 rounded-2xl mb-8 group-hover:bg-accent/10 group-hover:text-accent transition-all w-fit">
+                {iconMap[category.title] || <Cpu size={24} />}
+              </div>
+              
+              <h3 className="text-2xl font-black mb-4 uppercase tracking-tight">
+                {category.title}
+              </h3>
+              
+              <p className="text-muted-foreground mb-10 text-sm font-medium leading-relaxed">
+                {category.description}
+              </p>
+
+              <div className="space-y-6 mt-auto">
+                {category.skills.map((skill, sIdx) => (
+                  <div key={sIdx} className="space-y-2">
+                    <div className="flex justify-between items-end">
+                      <span className="text-xs font-black uppercase tracking-widest text-foreground/80">
+                        {skill.name}
+                      </span>
+                      <span className="text-[10px] font-mono text-accent font-bold">
+                        {skill.level}%
+                      </span>
+                    </div>
+                    <div className="h-[2px] w-full bg-white/5 overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.level}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.5, delay: 0.5 + idx * 0.1 }}
+                        className="h-full bg-accent"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

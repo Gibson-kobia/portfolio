@@ -12,8 +12,15 @@ export default function CustomCursor() {
   const outlineX = useSpring(0, { stiffness: 250, damping: 20 });
   const outlineY = useSpring(0, { stiffness: 250, damping: 20 });
 
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
+    const checkDesktop = () => setIsVisible(window.innerWidth > 768);
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    
     const handleMouseMove = (e: MouseEvent) => {
+      if (!isVisible) return;
       mouseX.set(e.clientX - 5);
       mouseY.set(e.clientY - 5);
       outlineX.set(e.clientX - 20);
@@ -21,6 +28,7 @@ export default function CustomCursor() {
     };
 
     const handleMouseOver = (e: MouseEvent) => {
+      if (!isVisible) return;
       const target = e.target as HTMLElement;
       if (
         target.tagName === 'A' ||
@@ -39,13 +47,16 @@ export default function CustomCursor() {
     window.addEventListener('mouseover', handleMouseOver);
 
     return () => {
+      window.removeEventListener('resize', checkDesktop);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
     };
-  }, [mouseX, mouseY, outlineX, outlineY]);
+  }, [mouseX, mouseY, outlineX, outlineY, isVisible]);
+
+  if (!isVisible) return null;
 
   return (
-    <>
+    <div className="pointer-events-none fixed inset-0 z-[9999]">
       <motion.div
         className="custom-cursor"
         style={{
@@ -61,9 +72,8 @@ export default function CustomCursor() {
           x: outlineX,
           y: outlineY,
           scale: isHovering ? 1.5 : 1,
-          borderWidth: isHovering ? '1px' : '1px',
         }}
       />
-    </>
+    </div>
   );
 }
