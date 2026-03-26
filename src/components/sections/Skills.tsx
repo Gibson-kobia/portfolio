@@ -1,10 +1,11 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { skillCategories } from '@/data/skills';
-import { Terminal, Cpu, Layout, Layers, Globe, Server } from 'lucide-react';
+import { Cpu, Layout, Globe, Server } from 'lucide-react';
 
-const iconMap: { [key: string]: any } = {
+const iconMap: Record<string, ReactNode> = {
   'Frontend Engineering': <Layout size={24} />,
   'Backend & Infrastructure': <Server size={24} />,
   'Experience Design': <Globe size={24} />,

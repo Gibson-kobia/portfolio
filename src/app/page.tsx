@@ -2,7 +2,7 @@ import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
-import { ProjectPerformanceStage } from "@/components/stage/ProjectPerformanceStage";
+import ProjectsStageShell from "@/components/stage/ProjectsStageShell";
 import Contact from "@/components/sections/Contact";
 import GitHubStats from "@/components/ui/GitHubStats";
 
@@ -15,8 +15,8 @@ export default function Home() {
       <About />
       <Skills />
       
-      {/* Performance Stage Prototype */}
-      <ProjectPerformanceStage />
+      {/* Isolated Project Stage Environment */}
+      <ProjectsStageShell />
       
       <Contact />
       
