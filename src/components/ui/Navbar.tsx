@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import MagneticButton from '@/components/ui/MagneticButton';
+import AvailabilityIndicator from '@/components/ui/AvailabilityIndicator';
 
 const navLinks = [
   { name: 'About', href: '#about' },
@@ -60,6 +61,7 @@ export default function Navbar() {
               {link.name}
             </motion.button>
           ))}
+          <AvailabilityIndicator />
           <MagneticButton
             onClick={() => handleNavClick('#contact')}
             className="px-6 py-2 bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-accent hover:text-accent-foreground transition-all"

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import StagePropsLeft from './StagePropsLeft';
 import StagePropsRight from './StagePropsRight';
 import StageBeacon from './StageBeacon';
+import StagePerformer from './StagePerformer';
 
 const ProjectsStageShell = () => {
   return (
@@ -47,6 +48,7 @@ const ProjectsStageShell = () => {
       {/* Center Performance Zone (Reserved) */}
       <div className="relative z-10 flex items-center justify-center w-full h-full">
         <StageBeacon />
+        <StagePerformer />
       </div>
 
       {/* Bottom Visual Separation - Fades to deep black to transition to next section */}
